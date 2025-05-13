@@ -5,13 +5,14 @@ class Login {
     private $uPW;
     private $username;
 
-    function __construct($uemail, $uPW, $username) {
+    public function __construct($uemail, $uPW, $username) {
         $this->uemail = $uemail;
         $this->uPW = $uPW;
         $this->username = $username;
+
     }
 
-    function loggingIn {
-        ;;
+    public function checkLogin {
+        
     }
 }

@@ -10,7 +10,7 @@ class DatabaseConnection {
     private $password;
 
     // Constructor
-    function __construct($server, $user, $pass) {
+    public function __construct($server, $user, $pass) {
         $this->myPDO = new PDO("mysql:host=$server;dbname=bfw_kleinanzeigen", $user, $pass);
         $this->servername = $server;
         $this->username = $user;
@@ -18,15 +18,34 @@ class DatabaseConnection {
     }
 
     // Methods
-    function get_connectingDB($connectingDB) {
+    public function get_connectingDB($connectingDB) {
         return $this->connectingDB;
     }
 
-    function get_rubriken() {
+    public function get_rubriken() {
         $rubrikArr = [];
         try {
             $this->myPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $stmt = $this->myPDO->prepare("SELECT * FROM rubrik");
+            $stmt->execute();
+
+            // set the resulting array to associative
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            
+            foreach($stmt->fetchAll() AS $rubrik) {
+                $rubrikArr[] = new Rubrik($rubrik["rID"], $rubrik["rname"], $rubrik["rbeschreibung"]);
+            }
+            } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            }  
+        return $rubrikArr;  
+    }
+
+    public function get_user() {
+        $userArr = [];
+        try {
+            $this->myPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $this->myPDO->prepare("SELECT uPW FROM user WHERE email = ?");
             $stmt->execute();
 
             // set the resulting array to associative
