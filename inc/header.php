@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header</title>
+    <title><?php if (!empty($pageTitle)) { echo $pageTitle; } else { echo 'BFW Kleinanzeigen'; } ?></title>
 </head>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary text-center">
     <ul class="nav nav-pills">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Start</a>
+        <a class="nav-link active" aria-current="page" href="http://localhost/github/bfwKleinanzeigen/index.php?seite=startseite">Start</a>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Rubriken</a>
@@ -20,7 +20,8 @@
         </ul>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Anmeldung</a>
+        <a class="nav-link" href="http://localhost/github/bfwKleinanzeigen/index.php?seite=login
+">Login</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" aria-disabled="true">Anzeige aufgeben</a>
@@ -29,9 +30,10 @@
 </nav>
 
 
-<header class="text-center">
-    <h1>BFW Kleinanzeigen</h1>
-    <p>Es ist fast wie Kleinanzeigen, nur <del>(fast)</del> besser!</p>
-</header>
+<main class="text-center">
+    <?php if (!empty($pageTitle)) : ?>
+        <h2><?php echo $pageTitle; ?></h2>
+    <?php endif; ?>
+            </main>
     
 </html>
