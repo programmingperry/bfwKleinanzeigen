@@ -1,7 +1,7 @@
 <?php 
 include "./Classes_Functions/Rubrik.php";
 
-class DatabaseConnection {
+class Database {
     // Properties
     private $myPDO;
 
@@ -18,10 +18,6 @@ class DatabaseConnection {
     }
 
     // Methods
-    public function get_connectingDB($connectingDB) {
-        return $this->connectingDB;
-    }
-
     public function get_rubriken() {
         $rubrikArr = [];
         try {
@@ -41,22 +37,29 @@ class DatabaseConnection {
         return $rubrikArr;  
     }
 
-    public function get_user() {
-        $userArr = [];
-        try {
-            $this->myPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $this->myPDO->prepare("SELECT uPW FROM user WHERE email = ?");
-            $stmt->execute();
+    public function get_user($email, $PW) {
 
-            // set the resulting array to associative
-            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            
-            foreach($stmt->fetchAll() AS $rubrik) {
-                $rubrikArr[] = new Rubrik($rubrik["rID"], $rubrik["rname"], $rubrik["rbeschreibung"]);
-            }
-            } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            }  
-        return $rubrikArr;  
+        $this->myPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $this->myPDO->prepare("SELECT * FROM user WHERE uemail = ? AND uPW = ?");
+        $stmt->execute([$email, $PW]);
+
+        // set the resulting array to associative
+        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $user = $stmt->fetchAll();
+
+        return $user;
     }
+
+    public function register_user($username, $PW, $email) {
+        $this->myPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $this->myPDO->prepare("INSERT INTO user (username, uPW, uemail) VALUES (?, ?, ?);");
+        $stmt->execute([$username, $PW, $email]);
+
+        // set the resulting array to associative
+        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $new_user = $stmt->fetchAll();
+
+        return $new_user;
+    }
+        
 }

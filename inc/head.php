@@ -3,7 +3,7 @@
     <meta name="description" content="Marktplatz zum Verkauf und Tausch von Gebrauchtem im BFW Hamburg">
     <meta name="keywords" content="Gebraucht, Tauschboerse, Verkauf, Flohmarkt">
     <meta name="author" content="Nele McCurrach">
-    <meta http-equiv="refresh" content="60">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="/styles/stylesWeb.css">

@@ -1,7 +1,13 @@
+<?php 
+  session_start();
+  if (isset($_SESSION["user"])) {
+    header("Location: index.php?seite=profil");
+    exit;
+}
+?> 
+
 <?php
-    session_start();
     $pageTitle = 'Anmelden';
-    $pageTitle = 'Anmelden'; 
 ?>
 
 <form method="post">
@@ -15,22 +21,30 @@
   </div>
   <button type="Login" class="btn btn-primary">Submit</button>
 </form>
+<br>
+<button type="button" class="btn btn-primary"><a href="index.php?seite=register">Noch keinen Account? Jetzt registrieren!</a></button>
 
 <?php 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $error = ''; 
+  
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $email = $_POST['email'] ?? '';
+    $passwort = $_POST['passwort'] ?? '';
 
-        $email = $_POST['email'] ?? '';
-        $passwort = $_POST['passwort'] ?? '';
-
-        $login = new Login($uemail, $uPW);
-
-        if($login->checkLogin()) {
-            $_SESSION['eingeloggt'] = true;
-            $_SESSION['uemail'] = $email;
-            echo "<p>Einloggen erfolgreich</p>"
-        } else {
-            echo "<p>Falsche Eingabe</p>"
-        }
+    $user = $conn->get_user($email, $passwort);
+    
+    if(!empty($user)) {
+      $_SESSION["user"] = $user;
+      header("Location: index.php");
+    } else {
+      $error = "Falsche Zugangsdaten";
     }
+  }
     
 ?>
+
+<?php 
+  error($error);
+?>
+ 
