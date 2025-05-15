@@ -1,4 +1,3 @@
-# projekt notizen kleinanzeigen   
 # Projektüberblick   
 ## Auftrag   
 „BFW Kleinanzeigen“ soll den Mitarbeiterinnen und Mitarbeitern des Berufsförderungswerk
