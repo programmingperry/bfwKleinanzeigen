@@ -21,18 +21,9 @@
     $dateipfad = "./pages/{$seite}.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-     
-    
-    
-</head>
-<main>
     <header>
         <?php include "./inc/header.php"; ?>
     </header>
-
 
     <body data-bs-theme="dark"> 
     <?php
@@ -43,6 +34,3 @@
     <footer>
         <?php include "./inc/footer.php" ?>
     </footer>
-    
-</main>
-</html>

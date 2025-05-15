@@ -1,4 +1,5 @@
 <?php 
+  global $conn;
   if (isset($_SESSION["user"])) {
     header("Location: index.php?seite=profil");
     exit;
@@ -14,11 +15,12 @@
 
     $user = $conn->get_user($email, $passwort);
     
-    if(!empty($user)) {
+    if ($user && isset($user['username'])) {
       $_SESSION["user"] = $user;
       header("Location: index.php");
       exit;
-    } else {
+    }
+    else {
       $error = "Falsche Zugangsdaten";
     }
   }  

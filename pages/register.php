@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     if (isset($_SESSION["user"])) {
         header("Location: index.php?seite=profil");
         exit;
@@ -17,9 +16,8 @@
         $new_user = $conn->register_user($username, $passwort, $email);
        
         if($new_user === true) {
-            $_SESSION["user"] = $new_user;
-            header("Location: index.php");
-            exit;
+            echo 'Das hat geklappt<br>';
+            echo '<button type="button" class="btn btn-primary"><a href="index.php?seite=login">Logge dich ein</a></button>';
         } else {
             $error = "Falsche Zugangsdaten";
         }
