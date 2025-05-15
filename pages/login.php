@@ -1,13 +1,31 @@
 <?php 
-  session_start();
   if (isset($_SESSION["user"])) {
     header("Location: index.php?seite=profil");
     exit;
-}
-?> 
+  }
 
-<?php
-    $pageTitle = 'Anmelden';
+  $pageTitle = 'Anmelden';
+
+  $error = '';
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $email = $_POST['email'] ?? '';
+    $passwort = $_POST['passwort'] ?? '';
+
+    $user = $conn->get_user($email, $passwort);
+    
+    if(!empty($user)) {
+      $_SESSION["user"] = $user;
+      header("Location: index.php");
+      exit;
+    } else {
+      $error = "Falsche Zugangsdaten";
+    }
+  }  
+ 
+  if ($error) {
+    echo '<div class="alert alert-danger">' . $error . '</div>';
+    }
 ?>
 
 <form method="post">
@@ -24,27 +42,5 @@
 <br>
 <button type="button" class="btn btn-primary"><a href="index.php?seite=register">Noch keinen Account? Jetzt registrieren!</a></button>
 
-<?php 
-  $error = ''; 
-  
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
-    $email = $_POST['email'] ?? '';
-    $passwort = $_POST['passwort'] ?? '';
-
-    $user = $conn->get_user($email, $passwort);
-    
-    if(!empty($user)) {
-      $_SESSION["user"] = $user;
-      header("Location: index.php");
-    } else {
-      $error = "Falsche Zugangsdaten";
-    }
-  }
-    
+<?php
 ?>
-
-<?php 
-  error($error);
-?>
- 

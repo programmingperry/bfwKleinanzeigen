@@ -24,8 +24,26 @@
 ">Login</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" aria-disabled="true">Anzeige aufgeben</a>
+        <a class="nav-link" href="http://localhost/github/bfwKleinanzeigen/index.php?seite=register
+">Registrieren</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://localhost/github/bfwKleinanzeigen/index.php?seite=profil
+    ">Profil</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://localhost/github/bfwKleinanzeigen/index.php?seite=neueanzeige
+">Neue Anzeige</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://localhost/github/bfwKleinanzeigen/index.php?seite=
+">Meine Anzeigen</a>
+    </li>
+    <?php if (isset($_SESSION['user']['username'])): ?>
+    <li class="nav-item">
+        <a class="nav-link disabled" aria-disabled="true">Moin <?= ($_SESSION['user']['username']) ?></a>
+    </li>               
+    <?php endif;?>
     </ul>
 </nav>
 

@@ -45,7 +45,7 @@ class Database {
 
         // set the resulting array to associative
         $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $user = $stmt->fetchAll();
+        $user = $stmt->fetch();
 
         return $user;
     }
@@ -55,11 +55,12 @@ class Database {
         $stmt = $this->myPDO->prepare("INSERT INTO user (username, uPW, uemail) VALUES (?, ?, ?);");
         $stmt->execute([$username, $PW, $email]);
 
-        // set the resulting array to associative
-        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $new_user = $stmt->fetchAll();
-
-        return $new_user;
+        if ($stmt->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
         
 }

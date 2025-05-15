@@ -1,7 +1,11 @@
 <?php 
 
-function error($error = null) {
-    if ($error) {
-        echo '<div class="alert alert-danger">' . $error . '</div>';
-    } 
+function ladeSeite($seite) {
+    global $conn;
+    $pfad = "./pages/{$seite}.php";
+    if (file_exists($pfad)) {
+        include $pfad;
+    } else {
+        echo "<p>Seite nicht gefunden.</p>";
+    }
 }

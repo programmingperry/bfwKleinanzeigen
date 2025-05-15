@@ -1,13 +1,33 @@
 <?php 
-  session_start();
-  if (isset($_SESSION["user"])) {
-    header("Location: index.php?seite=profil");
-    exit;
-}
-?> 
+    session_start();
+    if (isset($_SESSION["user"])) {
+        header("Location: index.php?seite=profil");
+        exit;
+        }
 
-<?php
     $pageTitle = 'Registrierung';
+ 
+    $error = '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+        $username = $_POST['username'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $passwort = $_POST['passwort'] ?? '';
+
+        $new_user = $conn->register_user($username, $passwort, $email);
+       
+        if($new_user === true) {
+            $_SESSION["user"] = $new_user;
+            header("Location: index.php");
+            exit;
+        } else {
+            $error = "Falsche Zugangsdaten";
+        }
+    }
+
+    if ($error) {
+        echo '<div class="alert alert-danger">' . $error . '</div>';
+        } 
 ?>
 
 <form method="post">
@@ -28,28 +48,5 @@
 <br>
 <button type="button" class="btn btn-primary"><a href="index.php?seite=login">Du hast schon einen Account? Logge dich ein</a></button>
 
-<?php 
-    $error = ''; 
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
-        $username = $_POST['username'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $passwort = $_POST['passwort'] ?? '';
-
-        $new_user = $conn->register_user($username, $email, $passwort);
-        
-        if(!empty($new_user)) {
-            $_SESSION["user"] = $new_user;
-            header("Location: index.php");
-        } else {
-            $error = "Fehler bei der Registrierung";
-        }
-    }
-?>
-
-<?php 
-    error($error);
-?>
 
 
